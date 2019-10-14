@@ -1,0 +1,210 @@
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+      integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+<style>
+      .hideDiv {
+            display: none;
+      }
+
+</style>
+
+<div class="oj-hybrid-padding" id="dashmain">
+      <oj-switch id="switch" value="{{isChecked}}" on-click="[[switchClick]]"></oj-switch>
+      <oj-button display="icons" id="btnGo" on-click="[[openPicture]]">
+            <i class="fas fa-laptop-code" style="font-size: 18px"> </i>
+          </oj-button>
+
+
+      <!--<h1>Departments</h1>
+
+
+      <div>
+          scroll-policy='loadMoreOnScroll'
+    scroll-policy-options='{"fetchSize": 10}'
+
+    -->
+
+    <oj-popup id="popup1"
+    tail="none" position.my.horizontal="center" position.my.vertical="bottom"
+    position.at.horizontal="center" position.at.vertical="center"
+    position.of="window" position.offset.y="200"
+    modality="modal" on-oj-animate-start="[[startAnimationListener]]">
+      <div class="demo-popup-body">
+        <div class="demo-popup-header"><h5>Screen Design</h5></div>
+        <div class="demo-popup-content">
+         <img src="css/images/schematic_dashboard.png" height="444" width="736">
+        </div>
+        <div class="demo-popup-footer">
+          <oj-button id="btnClose"  on-click="[[closePopuplListener]]">
+            Close
+          </oj-button>
+        </div>
+      </div>    
+  </oj-popup>
+
+      <div class="oj-flex">
+            <div class="oj-flex oj-flex-items-pad">
+                                    <div class="oj-flex-item ">
+                        <div  class="hideDiv" style="text-align:right;width:100%; color: #0571CE;">Click on department to change employee list</div>
+                        <div class="oj-flex-item oj-panel-shadow-sm " style="background-color : #FFFFFF; ; margin-bottom: 1em">
+                              <oj-toolbar id='deptToolbar' class='oj-toolbar-top-border oj-toolbar-bottom-border'
+                                    chroming='outlined' aria-label='Toolbar' aria-controls='controlled'>
+                                    <div class="oj-flex-bar-start" style="margin-left:1em">
+                                          <h3>Departments</h3>
+                                    </div>
+                                    <div class="oj-flex-bar-end" style="margin-right:1em">
+                                          <oj-button class="oj-button-primary" on-oj-action='[[editDepartment]]'>
+                                                <span slot='endIcon' class="oj-button-primary"></span>
+                                                Edit
+                                          </oj-button>
+                                    </div>
+                              </oj-toolbar>
+                              <oj-table id='deptTable' aria-label='Departments Table' data='[[deptDataprovider]]'
+                                    selection-mode='{"row": "single", "column": "single"}'
+                                    dnd='{"reorder": {"columns": "enabled"}}' selection-required='true'
+                                    style='width: 100%;'
+                                    on-selection-changed="[[deptSelectionListener]]" columns='[{"headerText": "Department Id", 
+               "field": "deptNo",
+               "resizable": "enabled"},
+              {"headerText": "Department Name", 
+               "field": "deptName",
+               "resizable": "enabled"},
+              {"headerText": "No of Employees", 
+               "field": "countEmployees",
+               "className": "oj-helper-text-align-end",
+               "style": "decimal",
+               "resizable": "enabled"}]'>
+               <!--
+               "resizable": "enabled"}]' style='width: 500px;'>
+                  -->
+                              </oj-table>
+                        </div>
+                        <div  class="hideDiv" style="text-align:right;width:100%; color: #0571CE;">Charts are also developed in Oracle Jet</div>
+                        <div class="oj-flex-bar-end oj-sm-only-hide oj-md-only-hide" style="margin-top: 1em">
+                              <div class="oj-flex-item oj-panel-shadow-sm"
+                                    style="background-color : #FFFFFF">
+                                    <oj-toolbar id='chartToolbar' class='oj-toolbar-top-border oj-toolbar-bottom-border'
+                                          chroming='outlined' aria-label='Toolbar' aria-controls='controlled'>
+                                          <div class="oj-flex-bar-start" style="margin-left:1em">
+                                                <h3>Employees By Department</h3>
+                                          </div>
+                                    </oj-toolbar>
+
+                                    <oj-chart id="pieChart" type="[[chartType]]" series="[[pieSeriesValue]]"
+                                          animation-on-display="auto" animation-on-data-change="auto"
+                                          hover-behavior="dim"
+                                          animation-on-display="auto"
+                                          style="max-width:500px;width:100%;height:350px;">
+                                          
+                                    </oj-chart>
+                                    <!--
+                                    <oj-buttonset-one id="vehicleset" class="oj-buttonset-width-auto"
+                                          value="{{chartType}}" display="icons" aria-label="Select graph type">
+                                          <oj-option value='pie'>
+                                                pie
+                                                <i class="fas fa-chart-pie" style="color: #237BB1; font-size: 30px"></i>
+                                          </oj-option>
+                                          <oj-option value='pie'>
+                                                <i class="fas fa-chart-line"
+                                                      style="color: #237BB1; font-size: 30px"></i>
+                                          </oj-option>
+                                    </oj-buttonset-one>
+-->
+                                    <oj-buttonset-one id="vehicleset" class="oj-buttonset-width-auto"
+                                          value="{{chartType}}" display="all" aria-label="Select only one vehicle.">
+                                          <oj-option value='pie'>
+                                                <i class="fas fa-chart-pie" style="font-size : 20px"></i>
+                                          </oj-option>
+                                          <oj-option value='bar'>
+                                                <i class="fas fa-chart-bar" style="font-size : 20px"></i>
+                                          </oj-option>
+                                    </oj-buttonset-one>
+
+                              </div>
+                        </div>
+                  </div>
+
+                  <div class="oj-flex-item">
+                        <div class="oj-flex-item oj-panel-shadow-sm oj-panel-alt3">
+                              <!--<div class="oj-flex-item oj-panel-shadow-sm oj-sm-margin-2x">-->
+
+                              <!--
+                                    scroll-position="{{scrollPos}}"
+                                    scroll-policy='loadMoreOnScroll'
+                                    scroll-policy-options='{"fetchSize": 10}'
+                                          -->
+                              <oj-toolbar id='empToolbar1' class='oj-toolbar-top-border oj-toolbar-bottom-border'
+                                    chroming='outlined' aria-label='Toolbar' aria-controls='controlled'>
+                                    <div class="oj-flex-bar-start" style="margin-left:1em">
+                                          <h3>Employees</h3>
+                                    </div>
+                                    <div class="oj-flex-bar-end" style="margin-right:1em">
+                                          <oj-button class="oj-button-primary" on-oj-action='[[editEmployee]]'>
+                                                <span slot='endIcon' class="oj-button-primary"></span>
+                                                Edit
+                                          </oj-button>
+                                    </div>
+                              </oj-toolbar>
+
+                              <oj-toolbar id='empToolbar2' class='oj-toolbar-top-border oj-toolbar-bottom-border'
+                                    chroming='outlined' aria-label='Toolbar' aria-controls='controlled'>
+                                    <oj-input-text id="filter" placeholder="Type and click Search to filter"
+                                          value="{{filter}}"></oj-input-text>
+                                    <!--<oj-input-text id="filter" placeholder="Type to filter" on-raw-value-changed="[[handleValueChanged]]" value="{{filter}}"></oj-input-text>-->
+                                    <oj-button id="clearButton" on-oj-action='[[clearClick]]' display='icons'
+                                          chroming='half'>
+                                          <span slot='startIcon' class='oj-fwk-icon oj-fwk-icon-cross03'></span>
+                                          Clear
+                                    </oj-button>
+                                    <oj-button id='searchButton' on-oj-action='[[handleValueChanged]]'
+                                          class="oj-button-primary">
+                                          Search
+                                    </oj-button>
+                              </oj-toolbar>
+
+                              <oj-table id='empTable' aria-label='Employess Table'
+                                    data='[[empDataprovider]]'
+                                    selection-mode='{"row": "single"}'
+                                    scroll-policy='loadMoreOnScroll'
+                                    style="width:100%; height: 810px;"
+                                    columns-default.sortable='enabled' 
+                                    columns='{{columnArray}}'
+                                    on-selection-changed="[[empSelectionListener]]" >
+                                    <script type="text/html" id="avatar_image">
+                                          
+            <td>
+             <!--<span class="avatar" data-bind="attr: {style: 'background-image: url(' + $context.row.avatarImage + ')'}"></span>-->
+             <img width="30px" style="border-radius: 50%;" height="30px" data-bind="attr:{src: $context.row.avatarImage}" />
+            </td>
+
+       </script>
+
+                                    <!--
+         <template slot="avatarImageTemplate">
+                  <oj-input-text id="avatarImage" value="[[avatarImage]]"></oj-input-text>
+                  <!--
+            <oj-avatar role="img" size="xs" initials='CL' id="avatarImage"
+            data-bind="attr:{'aria-label':'Avatar of Test Mc Test'}"
+            src="{{avatarImage}}">
+            -->
+                                    <!--   size="[[avatarSize]]" initials='[[initials]]'  data-bind="attr:{'aria-label':'Avatar of ' + firstName + ' ' + lastName}" 
+          </oj-avatar>
+            </template>
+      -->
+
+                              </oj-table>
+                              <!--
+                              <script type="text/html" id="avatarImage">
+                                    <td>
+                                          <input value="avatarImage"></input>
+                                     <span class="avatar" data-bind="attr: {style: 'background-image: url(' + avatarImage + ')'}"></span>
+                                    </td>
+                               </script>
+-->
+
+
+                        </div>
+                  </div>
+            </div>
+      </div>
+</div>

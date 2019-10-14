@@ -1,0 +1,155 @@
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+  integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  <style>
+      #saveDiv     {display: none;}
+      #saveMessage {visibility : hidden;}
+      #deleteMessage {visibility : hidden;}
+      .hideDiv {display: none;}
+  </style>
+
+<oj-messages position="{}" display="notification"  id="saveMessage" style="autoTimeout : 4">
+  <oj-message message='{"severity": "confirmation", "summary": "Confirmation message summary", 
+                        "detail": "Deparment details have been saved"}'>
+  </oj-message>
+</oj-messages>
+
+<oj-messages position="{}" display="notification"  id="deleteMessage">
+  <oj-message message='{"severity": "confirmation", "summary": "Confirmation message summary", 
+                        "detail": "Deparment details have been deleted"}'>
+  </oj-message>
+</oj-messages>
+
+<div id="dialogWrapper">
+<oj-dialog id="dialogForm" dialog-title="Modal Dialog" initial-visibility="hide" style="height: 200px; width: 400px; max-width:95%">
+  <div slot="body">
+Are you sure you would like to delete this department?
+  </div>
+
+  <div slot="footer" class="oj-dialog-footer-separator"> 
+    <oj-button id="okButton" class="oj-button-primary" on-oj-action='[[okButtonClick]]'>Ok</oj-button>
+    <oj-button id="cancelButton" class="oj-button-primary" on-oj-action='[[cancelButtonClick]]'>Cancel</oj-button>
+  </div>
+</oj-dialog>
+</div>
+
+<oj-popup id="popupMockup"
+tail="none" position.my.horizontal="center" position.my.vertical="bottom"
+position.at.horizontal="center" position.at.vertical="center"
+position.of="window" position.offset.y="200"
+modality="modal" on-oj-animate-start="[[startAnimationListener]]">
+  <div class="demo-popup-body">
+    <div class="demo-popup-header"><h5>Screen Design</h5></div>
+    <div class="demo-popup-content">
+     <img src="css/images/mockup_edit_department.png" height="444" width="736">
+    </div>
+    <div class="demo-popup-footer">
+      <oj-button id="btnClose"  on-click="[[closePopuplListener]]">
+        Close
+      </oj-button>
+    </div>
+  </div>    
+</oj-popup>
+
+
+<div class="oj-hybrid-padding">
+  <h1>Edit Department</h1>
+
+<oj-switch id="switch" value="{{isChecked}}" on-click="[[switchClick]]"></oj-switch>
+<oj-button display="icons" id="btnGo" on-click="[[openPicture]]">
+  <i class="fas fa-laptop-code" style="font-size: 18px"> </i>
+</oj-button>
+
+
+  <div class="oj-flex">
+    <div class="oj-flex-item"></div>
+    <div class="oj-flex-item">
+        <div  class="hideDiv" style="text-align:left; width:100%; color: #0571CE;">
+            This is a CRUD example using Oracle Jet components
+        <p></p></div>
+
+      <oj-form-layout label-edge="start" max-columns="2">
+        <oj-label for="search">Department</oj-label>
+        <!--<oj-combobox-one id="deptSearch" options="{{deptListDataProvider}}" filter-on-open="rawValue"-->
+        <oj-select-one id="deptSearch" options="{{deptListDataProvider}}" filter-on-open="rawValue"
+          on-oj-value-updated="[[deptSearchFnc]]" placeholder="Select Department" value="{{deptSearch}}">
+        </oj-select-one>
+        <oj-button class="oj-button-primary" on-oj-action='[[searchButtonClick]]'>
+          <span slot='startIcon' class=" oj-fwk-icon oj-fwk-icon-magnifier"></span>
+          Search
+        </oj-button>
+      </oj-form-layout>
+    </div>
+  </div>
+
+  <div class="oj-flex">
+    <div class="oj-flex-item"></div>
+
+    <div class="oj-flex-item oj-panel oj-panel-shadow-sm oj-sm-margin-2x" style="text-align : center; border:0px;">
+
+
+        <div id="saveDiv" style="text-align:right;width:100%; color: #0571CE;">
+          Click Save button to apply changes</div>
+
+      <oj-toolbar id='myToolbar' class='oj-toolbar-bottom-border' chroming='outlined' aria-label='Toolbar'
+        aria-controls='controlled'>
+        <div class="oj-flex-bar oj-flex-items-pad oj-sm-align-items-center">
+          <div class="oj-flex-bar-start" style="margin-left:1em">
+            <oj-button on-oj-action="[[saveButtonClick]]" style="padding : 0px;">
+              <i class="fas fa-save" style="font-size: 18px; color: royalblue; margin-right:-20px;"></i>
+              Save
+            </oj-button>
+            <oj-button on-oj-action="[[addButton]]">
+              <i class="fas fa-plus" style="font-size: 18px; color: green; margin-right:-20px;"></i>
+              Add
+            </oj-button>
+            <oj-button  on-oj-action="[[deleteButton]]">
+              <i class="fas fa-trash" style="font-size: 18px; color: Crimson; margin-right:-20px;"></i>
+              Delete
+            </oj-button>
+          </div>
+          <div class="oj-flex-bar-middle" style="margin:0 1em">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          </div>
+          <div class="oj-flex-bar-end">
+          </div>
+        </div>
+      </oj-toolbar>
+      <div id="form-container" class="oj-form-layout">
+        <oj-form-layout label-edge="start" style="margin : 20px">
+          <i id="deptIconCode" style="font-size: 32px;"></i>
+
+          <oj-label for="deptId">Id:</oj-label>
+          <oj-input-text id="deptId" value="{{deptId}}"></oj-input-text>
+          <oj-label for="deptName">Department Name:</oj-label>
+          <oj-input-text id="deptName" value="{{deptName}}"></oj-input-text>
+          <oj-label for="deptDescr">Description:</oj-label>
+          <oj-text-area id="text-area" value="{{deptDescr}}" style="max-width: 25em" rows="5" resize-behavior="vertical">
+          </oj-text-area>
+        </oj-form-layout>
+          <hr>
+          <oj-form-layout label-edge="start" style="margin : 20px">
+            <oj-label for="deptCountEmployees">No. of Employees:</oj-label>
+          <oj-input-number id="deptCountEmployees" value="{{deptCountEmployees}}" style= "text-align : right;" readonly></oj-input-number>
+          <!--<oj-label for="deptSalary">Total Salary:</oj-label>
+          <oj-input-text id="deptSalary" value="{{deptSalary}}" readonly></oj-input-text>
+          -->
+        </oj-form-layout>
+      </div>
+    </div>
+    <div class="oj-flex-item"></div>
+
+  </div>
+
+</div>
+
+
+
+<!--<span class="avatar" data-bind="attr: {style: 'background-image: url(' + $context.row.avatarImage + ')'}"></span>-->
+<!--<img src="css/images/men/17.jpg" width="10px" height="10px"/>-->
+<!--<img width="30px" style="border-radius: 50%;" height="30px" data-bind="attr:{src: $context.row.avatarImage}" />  avatarImage
+</td>
+</script>
+</oj-table>
+  </div>
+</div>

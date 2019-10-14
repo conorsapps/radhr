@@ -1,0 +1,103 @@
+<!--
+ Copyright (c) 2014, 2018, Oracle and/or its affiliates.
+ The Universal Permissive License (UPL), Version 1.0
+ -->
+<div class="oj-hybrid-padding">
+  <h1>Graphs Content Area</h1>
+  <div>
+    <div class="oj-flex o-flex-items-pad">
+
+      <div class="oj-flex-item">
+        <div class="oj-flex-bar-end oj-sm-only-hide oj-md-only-hide" style="margin-top: 1em">
+          <div class="oj-flex-item oj-panel-shadow-sm" style="background-color : #FFFFFF">
+            <oj-toolbar id='chartToolbar' class='oj-toolbar-top-border oj-toolbar-bottom-border' chroming='outlined'
+              aria-label='Toolbar' aria-controls='controlled'>
+              <div class="oj-flex-bar-start" style="margin-left:1em">
+                <h3>Employees By Department</h3>
+              </div>
+            </oj-toolbar>
+
+            <oj-chart id="pieChart" type="[[chartType]]" series="[[pieSeriesValue]]" animation-on-display="auto"
+              animation-on-data-change="auto" hover-behavior="dim" animation-on-display="auto"
+              style="max-width:500px;width:100%;height:350px;">
+
+            </oj-chart>
+            <oj-buttonset-one id="vehicleset" class="oj-buttonset-width-auto" value="{{chartType}}" display="all"
+              aria-label="Select only one vehicle.">
+              <oj-option value='pie'>
+                <i class="fas fa-chart-pie" style="font-size : 20px"></i>
+              </oj-option>
+              <oj-option value='bar'>
+                <i class="fas fa-chart-bar" style="font-size : 20px"></i>
+              </oj-option>
+            </oj-buttonset-one>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="oj-flex-item">
+          <div class="oj-flex-bar-end oj-sm-only-hide oj-md-only-hide" style="margin-top: 1em">
+            <div class="oj-flex-item oj-panel-shadow-sm" style="background-color : #FFFFFF">
+              <oj-toolbar id='chartToolbar' class='oj-toolbar-top-border oj-toolbar-bottom-border' chroming='outlined'
+                aria-label='Toolbar' aria-controls='controlled'>
+                <div class="oj-flex-bar-start" style="margin-left:1em">
+                  <h3>Salary By Department</h3>
+                </div>
+              </oj-toolbar>
+  
+              <oj-chart id="genderPieChart" type="[[salaryChartType]]" series="[[salaryPieSeriesValue]]" animation-on-display="auto"
+                animation-on-data-change="auto" hover-behavior="dim" animation-on-display="auto"
+                style="max-width:500px;width:100%;height:350px;">
+  
+              </oj-chart>
+              <oj-buttonset-one id="vehicleset" class="oj-buttonset-width-auto" value="{{salaryChartType}}" display="all"
+                aria-label="Select only one vehicle.">
+                <oj-option value='pie'>
+                  <i class="fas fa-chart-pie" style="font-size : 20px"></i>
+                </oj-option>
+                <oj-option value='bar'>
+                  <i class="fas fa-chart-bar" style="font-size : 20px"></i>
+                </oj-option>
+              </oj-buttonset-one>
+  
+            </div>
+          </div>
+        </div>
+  
+        <div class="oj-flex-item">
+            <div class="oj-flex-bar-end oj-sm-only-hide oj-md-only-hide" style="margin-top: 1em">
+              <div class="oj-flex-item oj-panel-shadow-sm" style="background-color : #FFFFFF">
+                <oj-toolbar id='chartToolbar' class='oj-toolbar-top-border oj-toolbar-bottom-border' chroming='outlined'
+                  aria-label='Toolbar' aria-controls='controlled'>
+                  <div class="oj-flex-bar-start" style="margin-left:1em">
+                    <h3>Gender</h3>
+                  </div>
+                </oj-toolbar>
+    
+                <oj-chart id="pieChart"
+                type="pie"
+                data="[[dataProvider]]"
+                style-defaults.pie-inner-radius="0.5"
+                animation-on-data-change="auto"
+                pie-center.label="Gender"
+                style="max-width:500px;width:100%;height:350px;">
+        
+                <template slot='itemTemplate' data-oj-as='item'>
+                    <oj-chart-item 
+                      value='[[item.data.value]]'
+                      group-id='[[ [item.data.group]]]'
+                      series-id='[[item.data.series]]'> 
+                    </oj-chart-item>
+                </template>
+           </oj-chart>
+           <br>
+           <br>
+
+              </div>
+            </div>
+          </div>
+        
+    </div>
+  </div>
+</div>
